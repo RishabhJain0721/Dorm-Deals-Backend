@@ -11,7 +11,7 @@ app.use(express.json());
 app.use('/', routes);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/ecommerce")
+  .connect("mongodb+srv://rishujain0721:1234560@cluster0.diqnynf.mongodb.net/ecommerce")
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {

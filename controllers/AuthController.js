@@ -31,11 +31,11 @@ const signup = async (req, res) => {
     await newUser.save();
 
     // Send a verification email to the user as the admin
-    const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken}`;
+    const verificationLink = `https://dorm-deals-backend.vercel.app/verify-email?token=${verificationToken}`;
 
     await transporter.sendMail({
       from: "rishujain0721@gmail.com", // Replace with your admin email address
-      to: "rishujain7217@gmail.com", // User's email
+      to: email,
       subject: "Verify your email",
       text: `Click the following link to verify your email: ${verificationLink}`,
     });
@@ -55,7 +55,6 @@ const login = async (req, res) => {
 };
 
 const verifyEmail = async (req, res) => {
-  console.log("Entered");
   const { token } = req.query;
   console.log(token);
 
@@ -67,7 +66,6 @@ const verifyEmail = async (req, res) => {
     if (user) {
       user.isVerified = true;
       await user.save();
-      console.log("sxdcfgvhjbnkm");
       res.send({ message: "Email verification successful." });
     } else {
       res
