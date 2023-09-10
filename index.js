@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(
   cors({
-    origin: "https://dorm-deals-backend-rpnw.vercel.app",
+    origin: "https://dorm-deals-frontend.vercel.app/",
   })
 );
 app.options("*", cors());
