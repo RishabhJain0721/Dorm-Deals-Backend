@@ -1,20 +1,28 @@
 import nodemailer from "nodemailer";
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
+import "dotenv/config.js";
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: "rishujain0721@gmail.com", // Replace with your admin email address
-    pass: "nbmwdajxwxgzopqo", // Replace with your admin email password
+    user: process.env.ADMIN_EMAIL,
+    pass: process.env.ADMIN_PASSWORD,
   },
 });
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    // A user with the same email already exists
+    console.log("Existing User")
+    return res.status(400).send({ message: "User already exists. Please login." });
+  }
 
   // Generate a verification token
-  const verificationToken = jwt.sign({ email }, "your_secret_key", {
+  const verificationToken = jwt.sign({ email }, process.env.SECRET_KEY, {
     expiresIn: "1d", // Token expires in 1 day
   });
 
@@ -31,7 +39,7 @@ const signup = async (req, res) => {
     await newUser.save();
 
     // Send a verification email to the user as the admin
-    const verificationLink = `https://dorm-deals-frontend.vercel.app/verify-email?token=${verificationToken}`;
+    const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken}`;
 
     await transporter.sendMail({
       from: "rishujain0721@gmail.com", // Replace with your admin email address
