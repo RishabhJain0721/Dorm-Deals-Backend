@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config.js";
+import dns from "dns";
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -13,12 +14,46 @@ const transporter = nodemailer.createTransport({
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
+
+
+  // Check if the email is valid
+  let validEmail = false;
+
+  const emailParts = email.split("@");
+  const domain = emailParts[1];
+
+  try {
+    const addresses = await dns.promises.resolveMx(domain);
+
+    if (addresses && addresses.length !== 0) {
+      console.log("Email domain exists and can receive emails.");
+      validEmail = true;
+    }
+
+    
+  } catch (error) {
+    console.error(error);
+    if (!validEmail) {
+      console.log("Email domain does not exist or cannot receive emails.");
+      return res.status(401).send({
+        message: "Email domain does not exist or cannot receive emails.",
+        errorName: "Invalid email",
+      });
+    }
+  }
+
+
+
+  // Check if a user with the same email already exists
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
     // A user with the same email already exists
-    console.log("Existing User")
-    return res.status(400).send({ message: "User already exists. Please login." });
+    console.log("Existing User");
+    return res.status(400).send({
+      message: "User already exists. Please login.",
+      errorName: "Existing user",
+    });
   }
 
   // Generate a verification token
