@@ -15,7 +15,6 @@ const transporter = nodemailer.createTransport({
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
-
   // Check if the email is valid
   let validEmail = false;
 
@@ -29,8 +28,6 @@ const signup = async (req, res) => {
       console.log("Email domain exists and can receive emails.");
       validEmail = true;
     }
-
-    
   } catch (error) {
     console.error(error);
     if (!validEmail) {
@@ -41,8 +38,6 @@ const signup = async (req, res) => {
       });
     }
   }
-
-
 
   // Check if a user with the same email already exists
   const existingUser = await User.findOne({ email });
@@ -93,8 +88,41 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   console.log(req.body);
-  console.log("Login request received");
-  res.send({ message: "Login request received" });
+  const { email, password } = req.body;
+
+  const existingUser = await User.findOne({ email });
+
+  if (!existingUser) {
+    // No such user found
+    console.log("User does not exist");
+    return res.status(400).send({
+      message: "User does not exist. Please signup.",
+      errorName: "User does not exist",
+    });
+  }
+
+  if (!existingUser.isVerified) {
+    // Unverified user
+    console.log("User is not verified");
+    return res.status(400).send({
+      message: "User is not verified. Please verify.",
+      errorName: "User is not verified",
+    });
+  }
+
+  if (existingUser.password !== password) {
+    // Incorrect password
+    console.log("Password is incorrect");
+    return res.status(400).send({
+      message: "Password is incorrect. Please try again.",
+      errorName: "Password is incorrect",
+    });
+  }
+
+  // Login successful
+  console.log("Login successful");
+  console.log(existingUser);
+  res.status(200).send({ message: "Login successful.", token:existingUser.verificationToken,name:existingUser.name });
 };
 
 const verifyEmail = async (req, res) => {
