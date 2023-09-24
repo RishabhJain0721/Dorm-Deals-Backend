@@ -23,6 +23,7 @@ const signup = async (req, res) => {
 
   try {
     const addresses = await dns.promises.resolveMx(domain);
+    console.log("Addresses are : ",addresses)
 
     if (addresses && addresses.length !== 0) {
       console.log("Email domain exists and can receive emails.");
