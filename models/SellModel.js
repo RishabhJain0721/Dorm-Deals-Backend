@@ -1,18 +1,19 @@
 import mongoose from "mongoose";
 
 const sellingSchema = new mongoose.Schema({
-  userEmail: String,
+  userToken: String,
   itemName: String,
+  itemCost: Number,
   itemDescription: String,
   contactNumber: Number,
   pickupLocation: String,
-  images: Array,
+  images:  [Object],
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-const ItemToSell = mongoose.model("ItemToSell", sellingSchema);
+const ItemToSell = mongoose.model("Item", sellingSchema);
 
 export default ItemToSell;
