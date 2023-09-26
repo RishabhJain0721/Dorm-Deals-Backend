@@ -21,6 +21,7 @@ const sellItem = async (req, res) => {
       // Get the form data from the request body
       const {
         userToken,
+        userName,
         itemName,
         itemCost,
         itemDescription,
@@ -32,6 +33,7 @@ const sellItem = async (req, res) => {
       try {
         const item = new ItemToSell({
           userToken,
+          userName,
           itemName,
           itemCost,
           itemDescription,

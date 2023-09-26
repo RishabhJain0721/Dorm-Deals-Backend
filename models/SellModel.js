@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const sellingSchema = new mongoose.Schema({
   userToken: String,
+  userName: String,
   itemName: String,
   itemCost: Number,
   itemDescription: String,
