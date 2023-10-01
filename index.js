@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use("/", routes);
 
-// Schedule the cleanup task to run every minute (for demonstration purposes)
+// Schedule the cleanup task to run every minute 
 cron.schedule('* * * * *', async () => {
   const fiveMinutesAgo = new Date();
   fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
