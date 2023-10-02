@@ -2,8 +2,17 @@ import ItemToSell from "../models/SellModel.js";
 
 const dashboardListItems = async (req, res) => {
   try {
-    const items = await ItemToSell.find({});
-    console.log(items);
+    const items = await ItemToSell.aggregate([
+      {
+        $project: {
+          itemName: 1,
+          itemCost: 1,
+          userName: 1,
+          image: { $arrayElemAt: ["$images", 0] }
+        }
+      }
+    ]);
+    // console.log(items);
     return res.status(200).send(items);
   } catch (error) {
     console.error("Error:", error);
