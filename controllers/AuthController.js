@@ -71,7 +71,7 @@ const signup = async (req, res) => {
     await newUser.save();
 
     // Send a verification email to the user as the admin
-    const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken}`;
+    const verificationLink = `https://dorm-deals-frontend.vercel.app/verify-email?token=${verificationToken}`;
 
     await transporter.sendMail({
       from: "rishujain0721@gmail.com", // Replace with your admin email address
