@@ -4,6 +4,7 @@ import { sellItem } from "../controllers/SellController.js";
 import { dashboardListItems } from "../controllers/DashboardController.js";
 import { ItemDetailsController } from "../controllers/ItemDetailsController.js";
 import { ProfileDetails, ItemsListedByUser  } from "../controllers/ProfileController.js";
+import { DeleteItem } from "../controllers/DeleteItemController.js";
 
 const router = express.Router();
 
@@ -15,5 +16,7 @@ router.get("/api/dashboard", dashboardListItems);
 router.post("/api/itemDetails", ItemDetailsController);
 router.post("/api/profile", ProfileDetails);
 router.post("/api/listedItemsByUser", ItemsListedByUser);
+router.post("/api/deleteItem", DeleteItem);
+
 
 export default router;

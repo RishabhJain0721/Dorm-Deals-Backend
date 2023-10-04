@@ -30,6 +30,15 @@ const sellItem = async (req, res) => {
       } = req.body;
       const images = req.files;
 
+      console.log("userToken:", userToken);
+      console.log("userName:", userName);
+      console.log("itemName:", itemName);
+      console.log("itemCost:", itemCost);
+      console.log("itemDescription:", itemDescription);
+      console.log("contactNumber:", contactNumber);
+      console.log("pickupLocation:", pickupLocation);
+      console.log("images:", images);
+
       try {
         const item = new ItemToSell({
           userToken,
