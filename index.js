@@ -6,13 +6,14 @@ import cron from "node-cron";
 import User from "./models/UserModel.js";
 import "dotenv/config.js";
 
+const corsOptions = {
+  origin: "https://dorm-deals-frontend.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.use(
-  cors({
-    origin: "https://dorm-deals-frontend.vercel.app",
-  })
-);
+app.use(cors(corsOptions));
 const PASSWORD = process.env.PASS;
 
 app.use(express.json());
