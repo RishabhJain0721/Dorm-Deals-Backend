@@ -15,9 +15,9 @@ app.use(cors({
   origin: "https://dorm-deals-frontend.vercel.app"
 }));
 
-app.options('*', cors({
-  origin: "https://dorm-deals-frontend.vercel.app"
-}));
+app.options('*', (req,res)=>{
+  return res.sendStatus(200);
+});
 
 app.use(express.json());
 
