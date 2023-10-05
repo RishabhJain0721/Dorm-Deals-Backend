@@ -10,8 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(
   cors({
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    origin: "https://dorm-deals-frontend.vercel.app",
   })
 );
 const PASSWORD = process.env.PASS;
