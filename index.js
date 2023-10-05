@@ -11,13 +11,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const PASSWORD = process.env.PASS;
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://dorm-deals-frontend.vercel.app");
-  res.setHeader("Access-Control-Allow-Headers", "Content-type,Authorization");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
+app.use(cors({
+  origin: "https://dorm-deals-frontend.vercel.app"
+}));
+
+app.options('*', cors({
+  origin: "https://dorm-deals-frontend.vercel.app"
+}));
 
 app.use(express.json());
 
