@@ -11,18 +11,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const PASSWORD = process.env.PASS;
 
-// const corsMiddleware = (req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', 'https://dorm-deals-frontend.vercel.app')
-//       .header('Access-Control-Allow-Headers', 'Authorization,Accept,Origin,DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range')
-//       .header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PUT,DELETE,PATCH');
-
-//   if (req.method === 'OPTIONS') {
-//       res.sendStatus(200);
-//   } else {
-//       next();
-//   }
-// }
-
 app.use(cors());
 
 app.use(express.json());
