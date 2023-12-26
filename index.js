@@ -6,24 +6,11 @@ import cron from "node-cron";
 import User from "./models/UserModel.js";
 import "dotenv/config.js";
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
-const PASSWORD = process.env.PASS;
+const MONGODB_URI = process.env.MONGODB_CONNECTION_STRING;
 
-const corsMiddleware = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://dorm-deals-frontend.vercel.app')
-      .header('Access-Control-Allow-Headers', 'Authorization,Accept,Origin,DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range')
-      .header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PUT,DELETE,PATCH');
-
-  if (req.method === 'OPTIONS') {
-      res.sendStatus(200);
-  } else {
-      next();
-  }
-}
-
-app.use(corsMiddleware);
+app.use(cors());
 
 app.use(express.json());
 
@@ -50,9 +37,7 @@ cron.schedule("* * * * *", async () => {
 });
 
 mongoose
-  .connect(
-    `mongodb+srv://rishujain0721:${PASSWORD}@cluster0.diqnynf.mongodb.net/ecommerce`
-  )
+  .connect(MONGODB_URI)
   .then(() => {
     console.log(`Connected to MongoDB`);
     app.listen(PORT, () => {

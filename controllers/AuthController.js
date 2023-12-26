@@ -24,7 +24,6 @@ const signup = async (req, res) => {
 
   try {
     const addresses = await dns.promises.resolveMx(domain);
-    console.log("Addresses are : ",addresses)
 
     if (addresses && addresses.length !== 0) {
       console.log("Email domain exists and can receive emails.");
@@ -129,13 +128,11 @@ const login = async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   const { token } = req.query;
-  console.log(token);
 
   try {
     // Verify the token and find the user
     const decoded = jwt.verify(token, "your_secret_key");
     const user = await User.findOne({ email: decoded.email });
-    console.log("Entered");
     if (user) {
       user.isVerified = true;
       await user.save();
